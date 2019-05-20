@@ -31,6 +31,7 @@ def create_app(test_config=None):
 
     # Utility functions
 
+    # EXTRA: function to calculate age
     def age(birthday, age_day=date.today()):
         """Returns person's age at age_day given their birthday
         Checks if they have already had their birthday in final year
@@ -47,6 +48,7 @@ def create_app(test_config=None):
     def index():
         return render_template('index.html', page_title="Beginner's Python Web Application")
 
+    # EXTRA: Add function to view a single person
     @app.route('/person/<id_person>')
     def view_person(id_person):
         if not id_person:
@@ -63,25 +65,18 @@ def create_app(test_config=None):
             where m1.id_person=?
             order by m1.date_start asc"""
         ministries = pm_db.execute(sql, (id_person,)).fetchall()
-        sql = """select * from tbl_recreation where id_person=?"""
-        recreations = pm_db.execute(sql, (person['id'],)).fetchall()
-        return render_template('view_person.html', person=person, ministries=ministries, recreations=recreations, page_title="View person")
+        return render_template('view_person.html', person=person, ministries=ministries, page_title="View person")
 
     @app.route('/persons/')
     def view_persons():
-        pm_db = db.get_db()
-        sql = """select distinct p.id, p.vc_common_name, p.vc_surname, p.date_birth, p.vc_birth_place, p.date_death 
-                from tbl_person p
-                order by p.vc_surname asc, p.vc_common_name asc"""
-        persons = pm_db.execute(sql).fetchall()
-        return render_template('list_person.html', persons=persons, page_title="People in database")
+        return render_template('list_person.html', page_title="People in database")
 
     @app.route('/prime_ministers/')
     def view_prime_ministers():
         ministry = "Prime Minister"
         page_title = ministry + 's'
         pm_db = db.get_db()
-        sql = """select distinct p.id, p.vc_common_name, p.vc_surname, p.date_birth, p.vc_birth_place, p.date_death 
+        sql = """select p.id, p.vc_common_name, p.vc_surname, p.date_birth, p.vc_birth_place, p.date_death 
                 from tbl_person p inner join tbl_ministry m on p.id=m.id_person 
                 where m.vc_ministry=?
                 order by p.vc_surname asc, p.vc_common_name asc"""
@@ -90,6 +85,7 @@ def create_app(test_config=None):
 
     # Filters
 
+    # EXTRA: date_format filter
     @app.template_filter('date_format')
     def date_format_filter(value, date_format="%d-%b-%Y"):
         try:
