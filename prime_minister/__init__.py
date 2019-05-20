@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, abort, request
+from flask import Flask, render_template, abort
 from flask_bootstrap import Bootstrap
 from datetime import date
 from . import db
@@ -65,50 +65,23 @@ def create_app(test_config=None):
             where m1.id_person=?
             order by m1.date_start asc"""
         ministries = pm_db.execute(sql, (id_person,)).fetchall()
-        sql = """select * from tbl_recreation where id_person=?"""
-        recreations = pm_db.execute(sql, (person['id'],)).fetchall()
-        return render_template('view_person.html', person=person, ministries=ministries, recreations=recreations, page_title="View person")
+        return render_template('view_person.html', person=person, ministries=ministries, page_title="View person")
 
-    @app.route('/persons/', methods=('GET', 'POST'))
+    @app.route('/persons/')
     def view_persons():
-        def sql_search_str(form_search_str):
-            if form_search_str is None or len(form_search_str.strip()) == 0:
-                return '%'
-            else:
-                return '%' + form_search_str.strip() + '%'
+        return render_template('list_person.html', page_title="People in database")
 
+    @app.route('/prime_ministers/')
+    def view_prime_ministers():
+        ministry = "Prime Minister"
+        page_title = ministry + 's'
         pm_db = db.get_db()
-        if request.method == 'POST':
-            given_name = sql_search_str(request.form['given-name'])
-            surname = sql_search_str(request.form['surname'])
-
-            sql = """select distinct p.id, p.vc_common_name, p.vc_given_names, p.vc_surname, p.date_birth, p.vc_birth_place, p.date_death 
-                    from tbl_person p
-                    where (p.vc_common_name like :gn or p.vc_given_names like :gn) and p.vc_surname like :sn
-                    order by p.vc_surname asc, p.vc_common_name asc"""
-            persons = pm_db.execute(sql, {"gn": given_name, "sn": surname}).fetchall()
-        else:
-            persons = None
-        return render_template('list_person.html', persons=persons, page_title="People in database")
-
-    def view_ministers(ministry="Prime Minister", page_title=None):
-        if page_title is None:
-            page_title = ministry + 's'
-        pm_db = db.get_db()
-        sql = """select distinct p.id, p.vc_common_name, p.vc_surname, p.date_birth, p.vc_birth_place, p.date_death 
+        sql = """select p.id, p.vc_common_name, p.vc_surname, p.date_birth, p.vc_birth_place, p.date_death 
                 from tbl_person p inner join tbl_ministry m on p.id=m.id_person 
                 where m.vc_ministry=?
                 order by p.vc_surname asc, p.vc_common_name asc"""
         ministers = pm_db.execute(sql, (ministry,)).fetchall()
         return render_template('list_minister.html', ministers=ministers, ministry=ministry, page_title=page_title)
-
-    @app.route('/prime_ministers/')
-    def view_prime_ministers():
-        return view_ministers("Prime Minister")
-
-    @app.route('/deputy_prime_ministers/')
-    def view_deputy_prime_ministers():
-        return view_ministers("Deputy Prime Minister")
 
     # Filters
 

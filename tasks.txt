@@ -3,10 +3,6 @@ Challenge 1: Add a page for view_prime_ministers
     b. Create a function view_prime_ministers() which calls render_template("list_minister.html") with suitable title
     c. Add hyperlink to nav bar
 
-Demo 2:
-    a. Create a run configuration to init-db
-    b. list all prime ministers in a table
-
 Challenge 2: List all people in database in list_person.html
     a. Add sql to prime_minister.view_persons() function and pass results to render_template
     b. Create a table in list_person.html with a loop to repeat the rows
@@ -15,18 +11,7 @@ Challenge 3: Show list of recreations in view_person.html
     a. tbl_recreation has a foreign key 'id_person' which joins to tbl_person 'id'
     b. tbl_recreation has a varchar field 'vc_recreation' which contains the name of the recreation
     c. Add sql in prime_minister.view_person(id_person) to find the list of recreations
-    d. Pass the list of recreations to render_template('view_person.html')
+    d. Pass the list of recreations to render_template('view_perons.html'
     e. Modify view_person.html to list any recreations
 
-Challenge 4: Add functionality for view_deputy_prime_ministers
-    a. Add hyperlink to nav bar "Deputy Prime Ministers"
-    b. Create a function view_ministers(ministry=PRIME_MINISTER, page_title=None) called by
-        view_prime_ministers() and view_deputy_prime_ministers()
 
-Demo 5: Add a form to list_person.html so user can search on person's name
-
-Challenge 5: Add authentication to application so users can log in.
-    a. Table already exists in database
-    b. Follow instructions in tutorial at http://flask.pocoo.org/docs/1.0/tutorial/views/
-    c. Table is tbl_user with fields (id, vc_username, vc_password)
-       Table in tutorial is user with fields (id, username, password)
