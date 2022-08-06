@@ -1,6 +1,7 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask
+from flask import render_template                              # EXTRA
 from flask_bootstrap import Bootstrap                          # EXTRA
 
 

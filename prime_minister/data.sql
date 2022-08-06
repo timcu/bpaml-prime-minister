@@ -74,7 +74,7 @@ INSERT INTO `tbl_ministry` (`id`, `date_start`, `id_next`, `id_person`, `vc_mini
 (35, '2013-06-27', 36, 72, 'Prime Minister', 'Labor', 'QLD'),
 (36, '2013-09-18', 37, 1, 'Prime Minister', 'Liberal', 'NSW'),
 (37, '2015-09-15', 38, 79, 'Prime Minister', 'Liberal', 'NSW'),
-(38, '2018-08-24', NULL, 63, 'Prime Minister', 'Liberal', 'NSW'),
+(38, '2018-08-24', 90, 63, 'Prime Minister', 'Liberal', 'NSW'),
 (39, '1901-01-01', 41, 28, 'Deputy Prime Minister', 'Protectionist', 'VIC'),
 (40, '1904-08-18', 89, 58, 'Deputy Prime Minister', 'Protectionist', 'VIC'),
 (41, '1903-09-24', 88, 52, 'Deputy Prime Minister', 'Protectionist', 'NSW'),
@@ -122,9 +122,12 @@ INSERT INTO `tbl_ministry` (`id`, `date_start`, `id_next`, `id_person`, `vc_mini
 (83, '2016-02-18', 84, 88, 'Deputy Prime Minister', 'National', 'NSW'),
 (84, '2017-10-27', 85, NULL, 'Deputy Prime Minister', NULL, NULL),
 (85, '2017-12-06', 86, 88, 'Deputy Prime Minister', 'National', 'NSW'),
-(86, '2018-02-26', NULL, 89, 'Deputy Prime Minister', 'National', 'NSW'),
+(86, '2018-02-26', 91, 89, 'Deputy Prime Minister', 'National', 'NSW'),
 (88, '1904-04-27', 40, 90, 'Deputy Prime Minister', 'Labor', 'SA'),
-(89, '1905-07-05', 42, 52, 'Deputy Prime Minister', 'Protectionist', 'NSW');
+(89, '1905-07-05', 42, 52, 'Deputy Prime Minister', 'Protectionist', 'NSW'),
+(90, '2022-05-23', NULL, 3, 'Prime Minister', 'Labor', 'NSW'),
+(91, '2021-06-22', 92, 88, 'Deputy Prime Minister', 'National', 'NSW'),
+(92, '2022-05-23', NULL, 92, 'Deputy Prime Minister', 'Labor', 'VIC');
 INSERT INTO `tbl_person` (`id`, `date_birth`, `date_death`, `vc_birth_place`, `vc_common_name`, `vc_given_names`, `vc_postnominal`, `vc_prenominal`, `vc_surname`) VALUES
 (1, '1957-11-04', NULL, 'UK', 'Tony', 'Anthony John', '', '', 'Abbott'),
 (2, '1958-02-01', NULL, 'NZ', 'Margie', 'Margaret Veronica', '', '', 'Aitken'),
@@ -164,7 +167,7 @@ INSERT INTO `tbl_person` (`id`, `date_birth`, `date_death`, `vc_birth_place`, `v
 (36, '1930-05-21', '2015-03-20', 'VIC', 'Malcolm', 'John Malcolm', 'AC, CH, GCL', '', 'Fraser'),
 (37, '1961-09-29', NULL, 'UK', 'Julia', 'Julia Eileen', 'AC', '', 'Gillard'),
 (38, '1911-09-09', '2002-05-19', 'VIC', 'John', 'John Grey', 'GCMG, AC, CH', 'Sir', 'Gorton'),
-(39, '1929-12-09', NULL, 'SA', 'Bob', 'Robert James Lee', 'AC, GCL', '', 'Hawke'),
+(39, '1929-12-09', '2019-05-16', 'SA', 'Bob', 'Robert James Lee', 'AC, GCL', '', 'Hawke'),
 (40, '1908-08-05', '1967-12-17', 'NSW', 'Harold', 'Harold Edward', 'CH', '', 'Holt'),
 (41, '1932-08-01', '2010-04-02', 'NSW', 'Sonia', 'Sonia Rachel', '', 'Lady', 'Hopkins'),
 (42, '1939-07-26', NULL, 'NSW', 'John', 'John Winston', 'OM, AC', '', 'Howard'),
@@ -215,7 +218,8 @@ INSERT INTO `tbl_person` (`id`, `date_birth`, `date_death`, `vc_birth_place`, `v
 (88, '1967-04-17', NULL, 'NSW', 'Barnaby', 'Barnaby Thomas Gerard', '', '', 'Joyce'),
 (89, '1964-08-02', NULL, 'NSW', 'Michael', 'Michael Francis', '', '', 'McCormack'),
 (90, '1848-10-18', '1914-08-13', 'UK', 'Gregor', 'Gregor', '', '', 'McGregor'),
-(91, '1871-11-23', '1946-09-13', 'VIC', 'William', 'William Alexander', '', '', 'Watt');
+(91, '1871-11-23', '1946-09-13', 'VIC', 'William', 'William Alexander', '', '', 'Watt'),
+(92, '1967-07-13', NULL, 'VIC', 'Richard', 'Richard Donald', '', '', 'Marles');
 INSERT INTO `tbl_recreation` (`id`, `id_person`, `vc_recreation`) VALUES
 (1, 1, 'Cycling'),
 (2, 1, 'Surf Lifesaving'),

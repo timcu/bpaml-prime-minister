@@ -2,8 +2,12 @@
 
 Links:
 - Youtube: https://youtu.be/CRd-4E9uNr0
-- Github:  https://github.com/timcu/session-summaries/raw/master/online/meetup152_tim_flask_web_app_prime_ministers.md
+- Github:  https://github.com/timcu/session-summaries/raw/master/online/meetup152_tim_flask_web_app_prime_minister.md
 - Meetup:  https://www.meetup.com/beginners-python-machine-learning/events/287509206/
+
+References:
+- https://flask.palletsprojects.com/en/2.2.0/tutorial/
+- https://docs.python.org/3/library/sqlite3.html
 
 Learning objectives:
 - Use Python virtual environments in PyCharm Community Edition IDE
@@ -20,7 +24,10 @@ Learning objectives:
 - Install IDE e.g. PyCharm Community Edition 2022.2 from https://www.jetbrains.com/pycharm/download/
 - Run PyCharm
 - Clone repository and setup virtual environment
-- Check out task1
+- Check out `task1`
+- run `flask app` in Terminal
+
+Running `flask app` works because of `.flaskenv` file and `python-dotenv` in `requirements.txt`
 
 ### Set up using command line
 
@@ -28,6 +35,35 @@ Learning objectives:
 git clone https://github.com/timcu/bpaml-prime-minister.git  # copy repository from github to your computer
 cd bpaml-prime-minister                                      # change directory into the project directory
 git checkout task1                                           # start with flask boilerplate code ready for task 1
+```
+
+Create virtual environment in Windows
+```Shell
+py -m venv venv                                              # create the virtual environment
+venv\Scripts\Activate.bat                                    # activate the virtual environment
+pip install -r requirements.txt                              # install the third party libraries
+```
+
+Create virtual environment in Mac or Linux
+```Shell
+python3 -m venv venv                                         # create the virtual environment
+source venv/bin/activate                                     # activate the virtual environment
+pip install -r requirements.txt                              # install the third party libraries
+```
+
+Create virtual environment in Anaconda
+```Shell
+conda create --name venv-bpaml-prime-minister python         # create the virtual environment
+conda activate venv-bpaml-prime-minister                     # activate the virtual environment
+conda install --name venv-dash-graph --file requirements.txt # install the third party libraries
+```
+
+Alternative method to run flask app in PyCharm by editing `Configurations...` from `Run` menu
+```
+Name: prime minister
+Module name: flask  # Remember to change Script to Module
+Parameters: run
+Working directory: select bpaml-prime-minister so it has full path
 ```
 
 ### Challenge 1: Add a page for view_prime_ministers 
@@ -43,14 +79,14 @@ git checkout task1soln        # switch to a tag/branch to see the solution
 git diff task1 task1soln      # to see what has changed in creating the solution
 ```
 
-When you have finished looking at the difference between task1 and task1soln, get ready for task2
+When you have finished looking at the difference between `task1` and `task1soln`, get ready for `task2`
 ```Shell
 git checkout task2            # to get ready for doing task 2
 ```
 
 ### Demo 2:
 
-1. Create a run configuration to init-db
+1. Create a run configuration to `init-db`
 2. List all prime ministers in a table
 
 ### Challenge 2: List all people in database in list_person.html
@@ -115,3 +151,44 @@ git checkout -b task6attempt  # create a branch to save your attempt
 git commit -a -m "my attempt" # save your changes to this branch so they can be retrieved later
 git diff task6 task6soln      # to see what has changed in creating the solution. 
 ```
+
+### Challenge 7: Create files so that app can be packaged and installed
+
+1. See https://flask.palletsprojects.com/en/2.2.0/tutorial/install/
+2. Create setup.py
+3. Create MANIFEST.in
+4. pip install wheel
+5. python setup.py bdist_wheel
+6. pip install -e .
+
+### Challenge 8: In template view_person.html show marriages in Life between birth and death
+
+- Examples view_person.html
+- e.g. "Married 1981 to Margie Aitken and had 3 children"
+- If not actually married num_year_marriage will be None.
+- e.g. "Partnered with Tim Matheison and had 0 children"
+- Modify function view_person(id_person) in __init__.py to pass marriages to template
+- Use a union sql statement because we need to search id_person and id_person_partner.
+- The following sql uses named bindings.
+```python
+sql = """select id, id_person, id_person_partner, num_children, num_year_marriage
+         from tbl_marriage where id_person=:id_person
+         union
+         select id, id_person_partner, id_person, num_children, num_year_marriage
+         from tbl_marriage where id_person_partner=:id_person
+         order by num_year_marriage asc"""
+```
+
+### Challenge 9: In view_person.html add a table of concurrent ministries under table of ministries.
+	
+- A concurrent ministry is one which was occurring at the same time as the person's ministry
+- eg While John Howard was prime minister there were three deputy prime ministers
+	-	Tim Fischer   Deputy from 11-Mar-1996 to 20-Jul-1999
+	-	John Anderson Deputy from 20-Jul-1999 to 06-Jul-2005
+	-	Mark Vaile    Deputy from 06-Jul-2005 to 03-Dec-2007
+- Modify function view_person(id_person) in `__init__.py`
+- Modify template view_person.html
+- Pseudocode:
+	- For each ministry period find other people's ministries which had some overlap.
+	- Aggregate and remove duplicates from this list of ministries
+	- Show the other ministries in order of start date.
