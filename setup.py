@@ -10,12 +10,12 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 
 setup(
-    name='bpss_prime_minister',
+    name='bpaml_prime_minister',
     version=VERSION,
     description='Demo flask web app listing prime ministers of Australia',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/timcu/bpss-prime-minister',
+    url='https://github.com/timcu/bpaml-prime-minister',
     author="D Tim Cummings",
     author_email='tim@triptera.com.au',  # Optional
     license='MIT',
@@ -32,9 +32,12 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
 
-    keywords='flask bpss pm',
+    keywords='flask bpaml pm',
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     python_requires='>=3',
     install_requires=['flask_bootstrap', 'python-dotenv'],
