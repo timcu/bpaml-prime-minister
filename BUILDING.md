@@ -12,7 +12,7 @@ twine upload --repository-url https://test.pypi.org/legacy/ dist/*.whl
 
 To install from test pypi:
 
-    pip install --index-url https://test.pypi.org/simple/ bpss_prime_minister==0.0.7
+    pip install --index-url https://test.pypi.org/simple/ bpss_prime_minister==0.0.9
 
 To upload to pypi:
 

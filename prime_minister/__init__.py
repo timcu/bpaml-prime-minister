@@ -1,9 +1,13 @@
 import os
 
-from flask import Flask, render_template, abort, request
-from flask_bootstrap import Bootstrap
 from datetime import date
 from . import db
+
+from flask import abort
+from flask import Flask
+from flask import render_template
+from flask import request
+from flask_bootstrap import Bootstrap
 
 
 def create_app(test_config=None):
@@ -31,7 +35,6 @@ def create_app(test_config=None):
 
     # Utility functions
 
-    # EXTRA: function to calculate age
     def age(birthday, age_day=date.today()):
         """Returns person's age at age_day given their birthday
         Checks if they have already had their birthday in final year
@@ -48,7 +51,6 @@ def create_app(test_config=None):
     def index():
         return render_template('index.html', page_title="Beginner's Python Web Application")
 
-    # EXTRA: Add function to view a single person
     @app.route('/person/<id_person>')
     def view_person(id_person):
         if not id_person:
@@ -124,6 +126,7 @@ def create_app(test_config=None):
 
         pm_db = db.get_db()
         if request.method == 'POST':
+            frm = request.form
             given_name = sql_search_str(request.form['given_name'])
             surname = sql_search_str(request.form['surname'])
 
@@ -133,8 +136,9 @@ def create_app(test_config=None):
                     order by p.vc_surname asc, p.vc_common_name asc"""
             persons = pm_db.execute(sql, {"gn": given_name, "sn": surname}).fetchall()
         else:
+            frm = None
             persons = None
-        return render_template('list_person.html', persons=persons, page_title="People in database", frm=request.form)
+        return render_template('list_person.html', persons=persons, page_title="People in database", frm=frm)
 
     def view_ministers(ministry="Prime Minister", page_title=None):
         if page_title is None:
@@ -157,7 +161,6 @@ def create_app(test_config=None):
 
     # Filters
 
-    # EXTRA: date_format filter
     @app.template_filter('date_format')
     def date_format_filter(value, date_format="%d-%b-%Y"):
         try:
@@ -167,7 +170,7 @@ def create_app(test_config=None):
 
     db.init_app(app)
 
+    from . import auth
+    app.register_blueprint(auth.bp)
+
     return app
-
-
-app = create_app()
