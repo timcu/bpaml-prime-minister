@@ -1,0 +1,45 @@
+[project]
+name = "prime-minister"
+dynamic = ["version"]
+dependencies = [
+    "flask",
+    "flask_bootstrap",
+    "python-dotenv",
+]
+name = "bpaml_prime_minister"
+authors = [
+    {name = "D Tim Cummings", email = "tim@triptera.com.au"},
+]
+description = "Demo flask web app listing prime ministers of Australia"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+keywords = ["flask", "bpaml", "pm"]
+
+classifiers =[
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "License :: OSI Approved :: MIT License",
+    "Framework :: Flask",
+    "Intended Audience :: Education",
+    "Intended Audience :: Developer",
+    "Natural Language :: English",
+    "Topic :: Education",
+]
+
+[project.urls]
+repository = "https://github.com/timcu/bpaml-prime-minister"
+
+[build-system]
+requires = ["setuptools>=65.6.3", "wheel>=0.38.4", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+exclude = ["tests*"]
+include = ["prime_minister*"]
+
+[tool.setuptools_scm]
+write_to = "prime_minister/version.py"
